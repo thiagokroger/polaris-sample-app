@@ -1,62 +1,9 @@
 {
-  "common": {
-    "name": "Polaris",
-    "cancel": "Annulla"
-  },
   "home": {
-    "title": "Home Page",
-    "viewOneButton": "Vai alla Schermata Uno",
-    "viewTwoButton": "Vai alla Schermata Due",
-    "viewThreeButton": "Vai alla Schermata Tre",
-    "settingsButton": "Vai alle Impostazioni",
-    "listViewButton": "Vai alla Schermata Lista",
-    "cameraButton": "Vai alla Telecamera",
-    "pushNotificationsButton": "Vai alla Notifiche Push",
-    "responsiveButton": "Vai alla esempio reattivo",
-    "authButton": "Vai all'esempio di autenticazione"
+    "title": "Tasks"
   },
-  "viewOne": {
-    "title": "Schermata Uno",
-    "message": "Schermata Uno"
-  },
-  "viewTwo": {
-    "title": "Schermata Due",
-    "message": "Schermata Due"
-  },
-  "viewThree": {
-    "title": "Schermata Tre",
-    "message": "Schermata Tre"
-  },
-  "listView": {
-    "title": "Schermata Lista",
-    "sortBy": "Ordina per:",
-    "message": "Schermata Lista",
-    "id": "ID",
-    "score": "Punteggio",
-    "viewButton": "Schermata {{id}}"
-  },
-  "pushNotificationsView": {
-    "title": "Notifiche Push",
-    "permissionsRejectedAlert": "Polaris non ha ottenuto le autorizzazioni di notifica",
-    "physicalDevice": "È necessario utilizzare un dispositivo fisico per le notifiche push",
-    "invalidVapidKey": "Per utilizzare le notifiche push Web, è necessario generare chiavi VAPID valide",
-    "sendNotificationButton": "Premere per inviare la notifica",
-    "messageTitle": "Titolo originale",
-    "messageBody": "Ed ecco il corpo!"
-  },
-  "responsiveView": {
-    "textWeb": "Cambia larghezza quando viewport",
-    "textNative": "Sempre a larghezza piena su nativo"
-  },
-  "authView": {
-    "title": "Autenticazione",
-    "loginButton": "Accedi con Auth0",
-    "welcomeText": "Ti sei autenticato",
-    "errorTitle": "Errore di autenticazione",
-    "defaultErrorMessage": "qualcosa è andato storto"
-  },
-  "listItem": {
-    "title": "Elenco articolo {:id}"
+  "newTask": {
+    "title": "New"
   },
   "settings": {
     "title": "Impostazioni",
@@ -65,16 +12,5 @@
   "camera": {
     "title": "Fotocamera",
     "permissionDenied": "Nessun accesso alla fotocamera"
-  },
-  "nav": {
-    "topLeft": "Alto Sinistra",
-    "topCenter": "Alto Centro",
-    "theme": {
-      "light": "Chiaro",
-      "dark": "Scuro"
-    }
-  },
-  "errors": {
-    "404": "404: Pagina {{path}}non trovata"
   }
 }

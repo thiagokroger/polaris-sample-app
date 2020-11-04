@@ -1,62 +1,9 @@
 {
-  "common": {
-    "name": "Polaris",
-    "cancel": "Cancel"
-  },
   "home": {
-    "title": "Home Screen",
-    "viewOneButton": "Go to View One",
-    "viewTwoButton": "Go to View Two",
-    "viewThreeButton": "Go to View Three",
-    "settingsButton": "Go to Settings",
-    "listViewButton": "Go to List View",
-    "cameraButton": "Go to Camera",
-    "pushNotificationsButton": "Go to Push Notifications",
-    "responsiveButton": "Go to responsive example",
-    "authButton": "Go to auth example"
+    "title": "Tasks"
   },
-  "viewOne": {
-    "title": "View One",
-    "message": "View One Screen"
-  },
-  "viewTwo": {
-    "title": "View Two",
-    "message": "View Two Screen"
-  },
-  "viewThree": {
-    "title": "View Three",
-    "message": "View Three Screen"
-  },
-  "listView": {
-    "title": "List View",
-    "message": "List View Screen",
-    "sortBy": "Sort by:",
-    "id": "ID",
-    "score": "Score",
-    "viewButton": "View {{id}}"
-  },
-  "pushNotificationsView": {
-    "title": "Push Notifications",
-    "permissionsRejectedAlert": "Polaris wasn't granted Notification permissions",
-    "physicalDevice": "Must use physical device for Push Notifications",
-    "invalidVapidKey": "To use web push notifications, you must generate valid VAPID keys",
-    "sendNotificationButton": "Press to Send Notification",
-    "messageTitle": "Original Title",
-    "messageBody": "And here is the body!"
-  },
-  "responsiveView": {
-    "textWeb": "Will change width when viewport",
-    "textNative": "Always full width on native"
-  },
-  "authView": {
-    "title": "Authentication",
-    "loginButton": "Log in with Auth0",
-    "welcomeText": "You are logged in",
-    "errorTitle": "Authentication error",
-    "defaultErrorMessage": "something went wrong"
-  },
-  "listItem": {
-    "title": "List item {:id}"
+  "newTask": {
+    "title": "New"
   },
   "settings": {
     "title": "Settings",
@@ -65,16 +12,5 @@
   "camera": {
     "title": "Camera",
     "permissionDenied": "No access to camera"
-  },
-  "nav": {
-    "topLeft": "Top Left",
-    "topCenter": "Top Center",
-    "theme": {
-      "light": "Light",
-      "dark": "Dark"
-    }
-  },
-  "errors": {
-    "404": "404: Page {{path}}not found"
   }
 }

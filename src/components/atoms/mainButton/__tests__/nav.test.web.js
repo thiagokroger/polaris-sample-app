@@ -1,9 +1,14 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { within, fireEvent, cleanup, renderAsRoute } from 'utils/test-utils'
 import { useTheme } from 'styled-components'
 
-import Navigation from '../'
+import {
+  within,
+  fireEvent,
+  cleanup,
+  renderAsRoute
+} from '../../../molecules/addTaskButton/__tests__/node_modules/utils/test-utils'
+import Navigation from '..'
 
 afterEach(cleanup)
 

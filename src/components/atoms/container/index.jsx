@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export default styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  background-color: #1e272e;
+  padding: 20px;
 `

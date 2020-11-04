@@ -43,6 +43,7 @@ const Header = () => {
   const title = replaceParams(translatedName, params)
   return (
     <NativeHeader
+      backgroundColor="#2b343b"
       leftComponent={<Left isHome={isHome} goBack={navigation.goBack} />}
       centerComponent={{
         text: title,

@@ -1,36 +1,64 @@
-import * as React from 'react'
-import { Platform } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { useTheme } from 'styled-components'
-import NearformLogo from 'assets/logos/nearform.svg'
+import React, { useEffect, useState } from 'react'
+import TaskItem from 'components/molecules/task'
 import Container from 'components/atoms/container'
-import LinkButton from 'components/molecules/link-button'
+import * as firebase from 'firebase'
+import Button from 'components/molecules/addTaskButton'
+import usePlatformNavigation from 'utils/hooks/usePlatformNavigation'
+import { ScrollView } from 'react-native'
+import styled from 'styled-components/native'
+
+const List = styled(ScrollView)`
+  margin-bottom: 190px;
+`
 
 export const HomeScreen = () => {
-  const { t } = useTranslation()
-  const theme = useTheme()
+  const { navigate } = usePlatformNavigation()
+  const [list, setList] = useState([])
+
+  useEffect(() => {
+    firebase
+      .database()
+      .ref('/tasks')
+      .on('value', snapshot => {
+        const data = snapshot.val()
+        setList(data || [])
+      })
+  }, [])
+
+  const setDone = id => {
+    const newList = list.map(val =>
+      val.id === id ? { ...val, done: !val.done } : val
+    )
+
+    setList(newList)
+    firebase.database().ref('/tasks').set(newList)
+  }
+
+  const sortList = (x, y) => {
+    if (x.done === y.done) {
+      const xDate = x.date.split(' ')
+      const yDate = y.date.split(' ')
+      if (xDate[1] === yDate[1]) {
+        return xDate[0].replace('Q', '') - yDate[0].replace('Q', '')
+      }
+      return xDate[1] - yDate[1]
+    }
+    if (y.done) {
+      return -1
+    }
+    return 1
+  }
 
   return (
-    <Container>
-      <NearformLogo
-        width={200}
-        height={50}
-        fill={theme.primary}
-        title="Nearform logo"
-      />
-      <LinkButton title={t('home:viewOneButton')} path="/viewOne" />
-      <LinkButton title={t('home:viewTwoButton')} path="/viewTwo" />
-      <LinkButton title={t('home:viewThreeButton')} path="/viewThree" />
-      <LinkButton title={t('home:listViewButton')} path="/listView" />
-      {Platform.OS !== 'web' && (
-        <LinkButton title={t('home:cameraButton')} path="/camera" />
-      )}
-      <LinkButton
-        title={t('home:pushNotificationsButton')}
-        path="/pushNotifications"
-      />
-      <LinkButton title={t('home:responsiveButton')} path="/responsive" />
-      <LinkButton title={t('home:authButton')} path="/auth" />
-    </Container>
+    <>
+      <Container>
+        <List>
+          {list.sort(sortList).map(val => (
+            <TaskItem key={val.id} {...val} setDone={() => setDone(val.id)} />
+          ))}
+        </List>
+      </Container>
+      <Button icon="add" trigger={() => navigate('/new')} />
+    </>
   )
 }
