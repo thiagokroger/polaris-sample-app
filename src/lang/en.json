@@ -12,5 +12,8 @@
   "camera": {
     "title": "Camera",
     "permissionDenied": "No access to camera"
+  },
+  "cameraRow": {
+    "title": "Camera Row"
   }
 }
