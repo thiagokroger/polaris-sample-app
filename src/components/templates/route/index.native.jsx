@@ -15,19 +15,23 @@ import propTypes from './prop-types'
 const Drawer = createDrawerNavigator()
 const isViewRoute = route => !!route.View
 const isMenuRoute = route => typeof route.menuIndex === 'number'
+const isStateRoutes = route => !route.loginRoute
 
 // Sort by lowest menu index first, with non-menu views last
 const getMenuIndexSortValue = menuIndex =>
   typeof menuIndex === 'number' ? menuIndex : Infinity
 
 // Place layout inside each screen, around each view, to access navigation hooks
-const withLayout = (ViewComponent, LayoutComponent) => {
+const withLayout = (ViewComponent, LayoutComponent, componentProps) => {
   if (!LayoutComponent) return ViewComponent
 
   const ViewWithLayout = props => {
     return (
-      <LayoutComponent>
-        <ViewComponent {...props} />
+      <LayoutComponent
+        hasMenu={componentProps.hasMenu}
+        logout={componentProps.logout}
+      >
+        <ViewComponent {...props} {...componentProps} />
       </LayoutComponent>
     )
   }
@@ -53,17 +57,29 @@ const withMenuFilter = (DrawerComponent, menuNames) => {
 const RouteNavigator = ({
   routes = presetRoutes,
   defaultPath = presetDefaultPath,
-  LayoutComponent = Layout
+  LayoutComponent = Layout,
+  isAuthenticated,
+  updateUser,
+  logout,
+  userId
 }) => {
+  if (!isAuthenticated) {
+    defaultPath = '/login'
+  }
+
   const dimensions = useWindowDimensions()
   const { t } = useTranslation()
 
-  const viewRoutes = routes.filter(isViewRoute)
+  const viewRoutes = routes.filter(isViewRoute).filter(isStateRoutes)
+  const loginRoute = routes.filter(route => route.loginRoute)
+
   viewRoutes.sort(
     (a, b) =>
       getMenuIndexSortValue(a.menuIndex) - getMenuIndexSortValue(b.menuIndex)
   )
   const menuNames = viewRoutes.filter(isMenuRoute).map(route => route.path)
+
+  const currentRoutes = !isAuthenticated ? loginRoute : viewRoutes
 
   return (
     <RoutesProvider routes={routes} defaultPath={defaultPath}>
@@ -72,10 +88,15 @@ const RouteNavigator = ({
         drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
         drawerContent={withMenuFilter(DrawerContent, menuNames)}
       >
-        {viewRoutes.map(route => (
+        {currentRoutes.map(route => (
           <Drawer.Screen
             name={route.path}
-            component={withLayout(route.View, LayoutComponent)}
+            component={withLayout(route.View, LayoutComponent, {
+              updateUser,
+              hasMenu: isAuthenticated,
+              logout,
+              userId
+            })}
             options={({ route: { params } }) => ({
               title: replaceParams(t(route.name), params)
             })}

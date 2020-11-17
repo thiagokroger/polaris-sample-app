@@ -1,4 +1,5 @@
 import * as React from 'react'
+import T from 'prop-types'
 import Container from 'components/atoms/container'
 import { Input, ButtonGroup, Button, Icon } from 'react-native-elements'
 import styled from 'styled-components/native'
@@ -20,7 +21,7 @@ const Row = styled.View`
   align-items: center;
 `
 
-export const NewTask = () => {
+export const NewTask = ({ userId }) => {
   const { navigate } = usePlatformNavigation()
   const [list, setList] = React.useState([])
   const [currentLink, setCurrentLink] = React.useState(null)
@@ -37,7 +38,7 @@ export const NewTask = () => {
   React.useEffect(() => {
     firebase
       .database()
-      .ref('/tasks')
+      .ref(userId)
       .on('value', snapshot => {
         const data = snapshot.val()
         setList(data || [])
@@ -50,7 +51,7 @@ export const NewTask = () => {
     }
 
     const newData = [
-      ...list,
+      ...(list || []),
       {
         id: list.length,
         name: task.name,
@@ -60,7 +61,7 @@ export const NewTask = () => {
       }
     ]
 
-    firebase.database().ref('/tasks').set(newData)
+    firebase.database().ref(userId).set(newData)
 
     await setTask({ name: '', quarter: 'Q1', year: '', links: [] })
     navigate('/')
@@ -90,7 +91,7 @@ export const NewTask = () => {
         />
 
         <Input
-          maxLength="4"
+          maxLength={4}
           keyboardType="numeric"
           inputStyle={{ color: 'white' }}
           label="Year"
@@ -140,4 +141,8 @@ export const NewTask = () => {
       <AddButton icon="done" trigger={() => save()} />
     </>
   )
+}
+
+NewTask.propTypes = {
+  userId: T.string
 }

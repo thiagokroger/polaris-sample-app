@@ -1,4 +1,5 @@
 import * as React from 'react'
+import T from 'prop-types'
 import { View, Text } from 'react-native'
 import { Camera as ExpoCamera } from 'expo-camera'
 import * as firebase from 'firebase'
@@ -48,7 +49,7 @@ const ImageContainer = styled.Image`
   width: 100%;
 `
 
-export const Camera = () => {
+export const Camera = ({ userId }) => {
   const { t } = useTranslation()
   const [hasPermission, setHasPermission] = React.useState(null)
   const [photo, setPhoto] = React.useState(null)
@@ -64,15 +65,13 @@ export const Camera = () => {
   }
 
   const uploadImage = async () => {
-    // TODO: add loading
     const fileSplited = photo.uri.split('/')
     const title = fileSplited[fileSplited.length - 1].replace('.jpg', '')
 
-    console.log('uploading image', title)
     const response = await fetch(photo.uri)
     const blob = await response.blob()
 
-    const ref = firebase.storage().ref('images').child(title)
+    const ref = firebase.storage().ref(userId).child(title)
     await ref
       .put(blob)
       .then(() => {
@@ -125,4 +124,8 @@ export const Camera = () => {
       </PhotoButtons>
     </Wrapper>
   )
+}
+
+Camera.propTypes = {
+  userId: T.string
 }

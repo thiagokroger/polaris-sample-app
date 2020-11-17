@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import T from 'prop-types'
 import TaskItem from 'components/molecules/task'
 import Container from 'components/atoms/container'
 import * as firebase from 'firebase'
@@ -11,14 +12,14 @@ const List = styled(ScrollView)`
   margin-bottom: 190px;
 `
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ userId }) => {
   const { navigate } = usePlatformNavigation()
   const [list, setList] = useState([])
 
   useEffect(() => {
     firebase
       .database()
-      .ref('/tasks')
+      .ref(userId)
       .on('value', snapshot => {
         const data = snapshot.val()
         setList(data || [])
@@ -31,7 +32,7 @@ export const HomeScreen = () => {
     )
 
     setList(newList)
-    firebase.database().ref('/tasks').set(newList)
+    firebase.database().ref(userId).set(newList)
   }
 
   const sortList = (x, y) => {
@@ -61,4 +62,8 @@ export const HomeScreen = () => {
       <Button icon="add" trigger={() => navigate('/new')} />
     </>
   )
+}
+
+HomeScreen.propTypes = {
+  userId: T.string
 }
