@@ -19,13 +19,13 @@ const ImageItem = ({ item }) => (
   />
 )
 
-export const CameraRow = () => {
+export const CameraRow = ({ userId }) => {
   const [images, setImages] = useState([])
 
   React.useEffect(() => {
     firebase
       .storage()
-      .ref('images')
+      .ref(userId)
       .list()
       .then(async res => {
         const data = res.items
@@ -37,7 +37,7 @@ export const CameraRow = () => {
         )
         setImages(urls)
       })
-      .catch(err => console.log('err', err))
+      .catch(err => console.log('Error refering to images', err))
   }, [])
 
   return (
@@ -56,4 +56,8 @@ ImageItem.propTypes = {
   item: {
     url: T.string
   }
+}
+
+CameraRow.propTypes = {
+  userId: T.string
 }

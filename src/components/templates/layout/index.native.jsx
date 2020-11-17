@@ -15,11 +15,11 @@ const Page = styled.View`
   padding-bottom: 0;
 `
 
-const LayoutBase = ({ children }) => {
+const LayoutBase = ({ children, hasMenu, logout }) => {
   return (
     <Screen>
       <Page>
-        <Header />
+        {hasMenu && <Header logout={logout} />}
         {children}
       </Page>
     </Screen>
@@ -27,7 +27,9 @@ const LayoutBase = ({ children }) => {
 }
 
 LayoutBase.propTypes = {
-  children: T.node
+  children: T.node,
+  hasMenu: T.bool,
+  logout: T.func
 }
 
 export default LayoutBase
